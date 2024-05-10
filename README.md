@@ -1,6 +1,4 @@
-Claro, aqui está um exemplo de README para o programa que criamos anteriormente:
 
----
 
 # Interface para Previsão de Falha de Máquina
 
