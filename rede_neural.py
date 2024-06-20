@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import messagebox, scrolledtext
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -39,14 +41,8 @@ loss = model.evaluate(X_test, y_test)
 print("Loss:", loss)
 
 # Função para fazer previsões a partir de entradas do usuário
-def fazer_previsao_manual():
-    entrada_usuario = []
-    for i, coluna in enumerate(colunas):
-        valor = float(input(f"Digite o valor para a coluna '{coluna}': "))
-        entrada_usuario.append(valor)
-    
-    # Converter para array numpy e normalizar
-    entrada_usuario = np.array(entrada_usuario).reshape(1, -1)
+def fazer_previsao_manual(valores_usuario):
+    entrada_usuario = np.array(valores_usuario).reshape(1, -1)
     entrada_usuario = scaler.transform(entrada_usuario)
     
     # Fazer a previsão
@@ -62,15 +58,85 @@ def fazer_previsao_manual():
     else:
         resultado = "Baixas chances de falha"
     
-    print(f"Saída prevista para a entrada fornecida: {previsao:.2f}")
-    print(f"Resultado: {resultado}")
+    return previsao, resultado
 
-# Solicitar ao usuário se deseja fazer uma previsão manual
-while True:
-    opcao = input("Você quer fazer uma previsão manual? (s/n): ").lower()
-    if opcao == 's':
-        fazer_previsao_manual()
-    elif opcao == 'n':
-        break
-    else:
-        print("Opção inválida. Por favor, digite 's' para sim ou 'n' para não.")
+# Lista de textos personalizados para as labels
+labels_personalizadas = [
+    "RPM (Rotações por Minuto) (0-5000)",
+    "Torque (0.0-70.0)",
+    "Desgaste (0-240)",
+    "TWF (0-1)",
+    "HDF (0-1)",
+    "PWF (0-1)",
+    "OSF (0-1)"
+]
+
+# Criação da interface gráfica com Tkinter
+def criar_interface():
+    # Função para processar a previsão quando o botão for clicado
+    def processar_previsao():
+        try:
+            valores_usuario = [float(entry.get()) for entry in entradas]
+            previsao, resultado = fazer_previsao_manual(valores_usuario)
+            messagebox.showinfo("Resultado da Previsão", f"Saída prevista: {previsao:.2f}\nResultado: {resultado}")
+        except ValueError:
+            messagebox.showerror("Erro de Entrada", "Por favor, insira valores válidos para todas as colunas.")
+
+    # Função para abrir a janela de ajuda
+    def abrir_janela_ajuda():
+        help_window = tk.Toplevel(root)
+        help_window.title("Ajuda - Previsão de Falhas de Máquina")
+        help_window.geometry("400x300")
+        
+        # Texto de ajuda
+        try:
+            with open('ajuda.txt', 'r', encoding='utf-8') as file:
+                help_text = file.read()
+        except FileNotFoundError:
+            help_text = "Arquivo de ajuda não encontrado."
+        
+        # Caixa de texto com barra de rolagem para exibir o texto de ajuda
+        text_area = scrolledtext.ScrolledText(help_window, wrap=tk.WORD, width=40, height=10)
+        text_area.insert(tk.END, help_text)
+        text_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        
+        # Botão para fechar a janela de ajuda
+        close_button = tk.Button(help_window, text="Fechar", command=help_window.destroy)
+        close_button.pack(pady=10)
+
+    # Criar a janela principal
+    root = tk.Tk()
+    root.title("Previsão de Falhas de Máquina")
+    root.geometry("400x400")
+
+    # Criar um comando de validação
+    vcmd = (root.register(validar_entrada), '%P')
+
+    # Criar labels e entradas para cada coluna
+    entradas = []
+    for texto_label in labels_personalizadas:
+        label = tk.Label(root, text=texto_label)
+        label.pack()
+        entry = tk.Entry(root, validate='key', validatecommand=vcmd)
+        entry.pack()
+        entradas.append(entry)
+
+    # Criar botão para fazer a previsão
+    button = tk.Button(root, text="Fazer Previsão", command=processar_previsao)
+    button.pack(pady=20)
+
+    # Botão para abrir a janela de ajuda
+    help_button = tk.Button(root, text="Ajuda", command=abrir_janela_ajuda)
+    help_button.pack(pady=10)
+
+    # Iniciar o loop principal da interface
+    root.mainloop()
+
+# Função de callback para validar entrada numérica
+def validar_entrada(P):
+    if P == "" or P.replace('.', '', 1).isdigit():
+        return True
+    return False
+
+# Chamar a função para criar a interface
+criar_interface()

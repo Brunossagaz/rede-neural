@@ -1,0 +1,20 @@
+
+Este é um programa de previsão de falhas de máquina utilizando TensorFlow e Tkinter.
+        
+        Passos para usar o programa:
+        1. Insira valores numéricos para cada uma das variáveis listadas.
+        2. Clique no botão 'Fazer Previsão' para ver a previsão de falha.
+        
+        Observações:
+        - Valores de saída previstos próximos a 1 indicam maior probabilidade de falha.
+        - Valores acima de 1 indicam uma previsão de falha iminente.
+        - Valores abaixo de 1 indicam menor probabilidade de falha.
+        
+        Dados a inserir:
+        - RPM (Rotações Por minuto): Indica quantas vezes um objeto gira completamente em um minuto. No contexto de máquinas de usinagem, como tornos, isso se refere à velocidade de rotação do eixo principal da máquina.
+        - Torque: É a medida da força rotacional aplicada em um eixo. Onde o indicado para esse programa é manter entre 0 e 70 Nm
+        - Desgaste: Refere-se ao nível de desgaste das ferramentas de corte. Em máquinas de usinagem, como tornos, as ferramentas de corte desgastam ao longo do tempo devido ao atrito com o material sendo usinado. Considere 0 para uma ferramenta nova e 240 para uma ferramenta com grande desgaste.
+        - TWF (Tool Wear Factor): Fator de desgaste da ferramenta. É uma medida que indica o quão rapidamente uma ferramenta de corte está se desgastando durante o processo de usinagem. Valores mais altos indicam um desgaste mais rápido. Considere 0 para desgaste minimo e 1 para alto desgaste.
+        - HDF (Hydraulic Damper Force): Força do amortecedor hidráulico. Refere-se à força exercida pelo amortecedor hidráulico em um sistema de máquina de usinagem, que pode afetar a estabilidade e o desempenho da máquina. Considere 0 como com estábilidade estável e 1 para instabilidade.
+        - PWF (Process Workpiece Factor): Fator do trabalho do processo na peça. Este pode se referir a diferentes características ou condições da peça sendo usinada que afetam o processo de usinagem. Considere 0 para uma peça com boas condições para uso e 1 para peças com alguma avaria que possam atrapalhar o processo.  
+        - OSF (Overall Stability Factor): Fator de estabilidade geral. Refere-se à estabilidade global da máquina de usinagem, levando em consideração vários parâmetros que podem afetar a precisão e a qualidade do processo de usinagem. Considere 0 como com estábilidade estável e 1 para instabilidade.
