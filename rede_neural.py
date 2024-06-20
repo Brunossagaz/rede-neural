@@ -1,10 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
+from customtkinter import * 
+from PIL import Image
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+
 
 # Carregar os dados do arquivo CSV
 data = pd.read_csv("machine_failure_cleaned.csv")
@@ -73,6 +77,7 @@ labels_personalizadas = [
 
 # Criação da interface gráfica com Tkinter
 def criar_interface():
+
     # Função para processar a previsão quando o botão for clicado
     def processar_previsao():
         try:
@@ -84,7 +89,8 @@ def criar_interface():
 
     # Função para abrir a janela de ajuda
     def abrir_janela_ajuda():
-        help_window = tk.Toplevel(root)
+        #help_window = tk.Toplevel(root)
+        help_window = CTkToplevel(root)
         help_window.title("Ajuda - Previsão de Falhas de Máquina")
         help_window.geometry("400x300")
         
@@ -101,32 +107,60 @@ def criar_interface():
         text_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
         # Botão para fechar a janela de ajuda
-        close_button = tk.Button(help_window, text="Fechar", command=help_window.destroy)
+        #close_button = tk.Button(help_window, text="Fechar", command=help_window.destroy)
+        close_button = CTkButton(help_window, text="Fechar", corner_radius=26, fg_color="#1B2CC1", hover_color="#3D518C" ,command=help_window.destroy)
         close_button.pack(pady=10)
+        
+    set_appearance_mode("dark")
 
     # Criar a janela principal
-    root = tk.Tk()
+    #root = tk.Tk()
+    root=CTk()
     root.title("Previsão de Falhas de Máquina")
-    root.geometry("400x400")
+    root.geometry("500x600")
+    set_appearance_mode("dark")
+
+    # Obter a largura e a altura da tela
+    largura_tela = root.winfo_screenwidth()
+    altura_tela = root.winfo_screenheight()
+    
+    # Calcular a posição para centralizar a janela
+    posicao_x = int(largura_tela / 2 - 500 / 2)  # 500 é a largura da janela principal
+    posicao_y = int(altura_tela / 2 - 600 / 2)   # 600 é a altura da janela principal
+    
+    # Definir a posição da janela
+    root.geometry(f"500x600+{posicao_x}+{posicao_y}")
 
     # Criar um comando de validação
     vcmd = (root.register(validar_entrada), '%P')
 
     # Criar labels e entradas para cada coluna
+    # entradas = []
+    # for texto_label in labels_personalizadas:
+    #     label = tk.Label(root, text=texto_label)
+    #     label.pack()
+    #     entry = tk.Entry(root, validate='key', validatecommand=vcmd)
+    #     entry.pack()
+    #     entradas.append(entry)
+
     entradas = []
     for texto_label in labels_personalizadas:
-        label = tk.Label(root, text=texto_label)
+        label = CTkLabel(root, text=texto_label)
         label.pack()
-        entry = tk.Entry(root, validate='key', validatecommand=vcmd)
+        entry = CTkEntry(root, validate='key', validatecommand=vcmd)
         entry.pack()
         entradas.append(entry)
 
     # Criar botão para fazer a previsão
-    button = tk.Button(root, text="Fazer Previsão", command=processar_previsao)
-    button.pack(pady=20)
+    #button = tk.Button(root, text="Fazer Previsão", command=processar_previsao)
+    #button.pack(pady=20)
+
+    #NOVO Botão Previsão
+    botao = CTkButton(master=root, text="Fazer previsão", corner_radius=26, fg_color="#1B2CC1", hover_color="#3D518C" , command=processar_previsao)
+    botao.pack(pady=20)
 
     # Botão para abrir a janela de ajuda
-    help_button = tk.Button(root, text="Ajuda", command=abrir_janela_ajuda)
+    help_button = CTkButton(master=root, text="Ajuda", corner_radius=26, fg_color="#1B2CC1", hover_color="#3D518C" , command=abrir_janela_ajuda)
     help_button.pack(pady=10)
 
     # Iniciar o loop principal da interface
@@ -140,3 +174,4 @@ def validar_entrada(P):
 
 # Chamar a função para criar a interface
 criar_interface()
+
