@@ -107,17 +107,15 @@ def criar_interface():
         text_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
         # Botão para fechar a janela de ajuda
-        #close_button = tk.Button(help_window, text="Fechar", command=help_window.destroy)
         close_button = CTkButton(help_window, text="Fechar", corner_radius=26, fg_color="#1B2CC1", hover_color="#3D518C" ,command=help_window.destroy)
         close_button.pack(pady=10)
         
     set_appearance_mode("dark")
 
     # Criar a janela principal
-    #root = tk.Tk()
     root=CTk()
     root.title("Previsão de Falhas de Máquina")
-    root.geometry("500x600")
+    root.geometry("600x500")
     set_appearance_mode("dark")
 
     # Obter a largura e a altura da tela
@@ -125,23 +123,14 @@ def criar_interface():
     altura_tela = root.winfo_screenheight()
     
     # Calcular a posição para centralizar a janela
-    posicao_x = int(largura_tela / 2 - 500 / 2)  # 500 é a largura da janela principal
-    posicao_y = int(altura_tela / 2 - 600 / 2)   # 600 é a altura da janela principal
+    posicao_x = int(largura_tela / 2 - 500 / 2) 
+    posicao_y = int(altura_tela / 2 - 600 / 2) 
     
     # Definir a posição da janela
     root.geometry(f"500x600+{posicao_x}+{posicao_y}")
 
     # Criar um comando de validação
     vcmd = (root.register(validar_entrada), '%P')
-
-    # Criar labels e entradas para cada coluna
-    # entradas = []
-    # for texto_label in labels_personalizadas:
-    #     label = tk.Label(root, text=texto_label)
-    #     label.pack()
-    #     entry = tk.Entry(root, validate='key', validatecommand=vcmd)
-    #     entry.pack()
-    #     entradas.append(entry)
 
     entradas = []
     for texto_label in labels_personalizadas:
