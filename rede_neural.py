@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
 from customtkinter import * 
-from PIL import Image
+#from PIL import Image
 import numpy as np
 import pandas as pd
 import tensorflow as tf
