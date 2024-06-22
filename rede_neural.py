@@ -9,7 +9,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-
 # Carregar os dados do arquivo CSV
 data = pd.read_csv("machine_failure_cleaned.csv")
 

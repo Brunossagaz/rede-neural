@@ -1,45 +1,63 @@
+### Apresentação sobre o Código de IA Generativa e Interface Gráfica
 
+#### Introdução
+O código apresentado realiza previsões de falhas em máquinas utilizando uma abordagem de Inteligência Artificial (IA) generativa. Ele inclui a construção e treinamento de um modelo de aprendizado de máquina e a criação de uma interface gráfica para facilitar a interação do usuário.
 
-# Interface para Previsão de Falha de Máquina
+#### Principais Componentes e Métodos Utilizados
 
-Esta é uma interface simples para fazer previsões de falha de máquina com base em dados inseridos pelo usuário. 
-O programa utiliza um modelo de rede neural treinado com dados históricos de máquinas para prever se uma máquina está propensa a 
-falhar com base em várias características operacionais.
+1. **Bibliotecas Importadas:**
+   - **Pandas (pd):** Usada para manipulação de dados e leitura de arquivos CSV.
+   - **Numpy (np):** Utilizada para operações numéricas eficientes.
+   - **TensorFlow (tf):** Framework de aprendizado de máquina usado para construir e treinar o modelo de IA.
+   - **Scikit-learn:** Biblioteca utilizada para pré-processamento de dados e divisão dos conjuntos de treinamento e teste.
+   - **Tkinter e CustomTkinter:** Utilizadas para criar a interface gráfica do usuário (GUI).
 
-## Requisitos
+2. **Carregamento e Pré-processamento de Dados:**
+   - Os dados são carregados de um arquivo CSV utilizando o Pandas.
+   - Os dados são separados em características (X) e rótulos (y), que representam se houve falha na máquina ou não.
+   - A divisão dos dados em conjuntos de treinamento e teste é feita utilizando `train_test_split`.
+   - A normalização dos dados é realizada com `StandardScaler` para melhorar o desempenho do modelo.
 
-- Python 3.x
-- TensorFlow
-- Pandas
-- Scikit-learn
-- Tkinter (geralmente incluído na instalação padrão do Python, mas pode precisar ser instalado separadamente em alguns sistemas operacionais)
+3. **Construção do Modelo:**
+   - Um modelo sequencial é criado utilizando TensorFlow/Keras.
+   - O modelo consiste em duas camadas densas: uma com 64 neurônios e função de ativação ReLU e outra com 1 neurônio para a saída.
+   - O modelo é compilado com o otimizador Adam e a função de perda `mean_squared_error`.
 
-## Instalação
+4. **Treinamento e Avaliação do Modelo:**
+   - O modelo é treinado com os dados normalizados por 10 épocas, usando um tamanho de lote de 64 e uma divisão de validação de 20%.
+   - A avaliação do modelo é realizada no conjunto de teste para calcular a perda.
 
-1. Certifique-se de ter Python 3.x instalado em seu sistema. Você pode baixá-lo em [python.org](https://www.python.org/).
+5. **Função de Previsão Manual:**
+   - Recebe valores de entrada do usuário, transforma e normaliza esses valores, e realiza a previsão utilizando o modelo treinado.
+   - Classifica a previsão em categorias como "Falha de máquina", "Grande chance de falhas", "Chances de falha", e "Baixas chances de falha" com base no valor predito.
 
-2. Instale as dependências necessárias usando o pip:
+#### Interface Gráfica (GUI)
+A interface gráfica é criada usando Tkinter e CustomTkinter para permitir que os usuários insiram dados e recebam previsões de falhas.
 
-    ```
-    pip install tensorflow pandas scikit-learn
-    ```
+- **Elementos da Interface:**
+  - Labels e entradas para cada característica relevante.
+  - Botão para executar a previsão e exibir o resultado em uma mensagem popup.
+  - Botão de ajuda que abre uma nova janela com informações adicionais, lidas de um arquivo `ajuda.txt`.
+ 
+- **Características do Design:**
+  - Modo escuro ativado com `set_appearance_mode("dark")`.
+  - A janela principal é centralizada na tela e ajustada para um tamanho fixo.
+  - Entradas são validadas para garantir que sejam numéricas.
 
-3. Se estiver usando um sistema operacional que não inclui o Tkinter por padrão (por exemplo, Ubuntu), você pode precisar instalar o pacote separadamente. Veja as instruções específicas para o seu sistema operacional na seção "Requisitos".
+#### Práticas Aplicadas e IA Generativa
 
-## Utilização
+1. **Uso de Redes Neurais:**
+   - O modelo é uma rede neural simples (MLP - Perceptron Multicamadas), adequada para tarefas de classificação binária como prever falhas de máquinas.
+   
+2. **Pré-processamento de Dados:**
+   - Normalização dos dados para garantir que todas as características contribuam igualmente para o treinamento do modelo.
+   
+3. **Divisão de Dados:**
+   - Uso de `train_test_split` para criar conjuntos de treinamento e teste, essencial para validar a capacidade de generalização do modelo.
 
-1. Execute o programa executando o seguinte comando no terminal:
+4. **Interface Amigável:**
+   - A GUI permite que usuários sem conhecimento técnico utilizem o modelo de IA para fazer previsões, facilitando a adoção da tecnologia.
 
-    ```
-    python interface_previsao.py
-    ```
+#### Conclusão
 
-2. Uma interface gráfica será aberta onde você pode inserir os valores dos dados para teste.
-
-3. Insira os valores nos campos de entrada fornecidos. Os campos incluem RPM, Torque, Desgaste, TWF, HDF, PWF e OSF.
-
-4. Clique no botão "Fazer Previsão" para ver a previsão de falha de máquina com base nos dados inseridos.
-
-5. O resultado da previsão será exibido abaixo do botão, indicando se a máquina está propensa a falhar ou não.
-
---- 
+Este código é um exemplo robusto de como integrar técnicas de IA generativa com uma interface gráfica amigável. Ele abrange todo o fluxo de trabalho, desde o carregamento e pré-processamento dos dados, passando pela construção, treinamento e avaliação do modelo, até a interação com o usuário através de uma interface gráfica intuitiva.
